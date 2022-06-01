@@ -4,33 +4,35 @@ import { onMounted } from 'vue'
 import api from '../api.js'
 import MovieCard from '../components/MovieCard.vue';
 
-onMounted(() => {
-  // TODO async
-  // fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${api.key}`)
-  //   .then(response => response.json())
-  //   .then(data => {
-  //     popularMovies.value = data.results.slice(0, 10);
-  //     console.log('popularMovies', popularMovies.value)
-  //   });
-  // fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${api.key}`)
-  //   .then(response => response.json())
-  //   .then(data => {
-  //     upcomingMovies.value = data.results.slice(0, 10);
-  //     console.log('upcomingMovies', upcomingMovies.value)
-  //   });
-  // fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${api.key}`)
-  //   .then(response => response.json())
-  //   .then(data => {
-  //     nowPlayingMovies.value = data.results.slice(0, 10);
-  //     console.log('nowPlayingMovies', nowPlayingMovies.value)
-  //   });
-  // fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${api.key}`)
-  //   .then(response => response.json())
-  //   .then(data => {
-  //     genres.value = data.genres;
-  //     console.log('genres', genres.value)
-  //   });
-})
+// onMounted(() => {
+//   Promise.all([
+//     fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${api.key}`),
+//     fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${api.key}`),
+//     fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${api.key}`),
+//     fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${api.key}`)
+//   ]).then(function (responses) {
+//     return Promise.all(responses.map(function (response) {
+//       return response.json();
+//     }));
+//   }).then(function (data) {
+//     popularMovies.value = data[0].results.slice(0, 10);
+//     upcomingMovies.value = data[1].results.slice(0, 10);
+//     nowPlayingMovies.value = data[2].results.slice(0, 10);
+//     genres.value = data[3].genres;
+//     console.log(data);
+//   }).catch(function (error) {
+//     console.log(error);
+//   });
+// })
+
+// const popularMovies = ref([])
+// const genres = ref([])
+// const upcomingMovies = ref([])
+// const nowPlayingMovies = ref([])
+
+
+
+
 
 const popularMovies = ref([
   {

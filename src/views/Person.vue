@@ -50,25 +50,23 @@ const credits = computed(() => {
 })
 
 onMounted(() => {
-  fetch(`https://api.themoviedb.org/3/person/${props.id}?api_key=${api.key}`)
-    .then(response => response.json())
-    .then(data => {
-      person.value = data;
-      renderTemplate.value = true
-      console.log(person.value)
-    });
-  fetch(`https://api.themoviedb.org/3/person/${props.id}/external_ids?api_key=${api.key}`)
-    .then(response => response.json())
-    .then(data => {
-      personSocial.value = data;
-      console.log(personSocial.value)
-    });
-  fetch(`https://api.themoviedb.org/3/person/${props.id}/combined_credits?api_key=${api.key}`)
-    .then(response => response.json())
-    .then(data => {
-      personCredits.value = data;
-      console.log(personCredits.value)
-    });
+  Promise.all([
+    fetch(`https://api.themoviedb.org/3/person/${props.id}?api_key=${api.key}`),
+    fetch(`https://api.themoviedb.org/3/person/${props.id}/external_ids?api_key=${api.key}`),
+    fetch(`https://api.themoviedb.org/3/person/${props.id}/combined_credits?api_key=${api.key}`)
+  ]).then(function (responses) {
+    return Promise.all(responses.map(function (response) {
+      return response.json();
+    }));
+  }).then(function (data) {
+    person.value = data[0]
+    personSocial.value = data[1]
+    personCredits.value = data[2]
+    renderTemplate.value = true
+    console.log(data);
+  }).catch(function (error) {
+    console.log(error)
+  });
 })
 
 const person = ref({})
