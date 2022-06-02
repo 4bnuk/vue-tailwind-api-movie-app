@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, computed } from 'vue'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import api from '../api.js'
 
 const props = defineProps({
@@ -20,8 +20,7 @@ const formatReleaseDate = computed(() => new Date(movie.value.release_date).toLo
 
 const movieGenres = computed(() => movie.value.genres.map(genre => genre.name).join(', '))
 
-
-onMounted(() => {
+function fetchData() {
   fetch(`https://api.themoviedb.org/3/movie/${props.id}?append_to_response=credits,videos,images&api_key=${api.key}`)
     .then(response => response.json())
     .then(data => {
@@ -29,6 +28,14 @@ onMounted(() => {
       renderTemplate.value = true
       console.log(movie.value)
     });
+}
+
+onMounted(() => {
+  fetchData()
+})
+
+watch(() => props.id, () => {
+  fetchData()
 })
 
 const movie = ref({})

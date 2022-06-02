@@ -1,9 +1,19 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import api from '../api.js'
 
 const searchText = ref('')
 const searchResults = ref([])
+const target = ref(null)
+const searchIsOpen = ref(false)
+
+onMounted(() => {
+  document.addEventListener('click', (e) => {
+    if (target.value !== undefined && target.value.contains(e.target) === false) {
+      searchIsOpen.value = false
+    }
+  })
+})
 
 function callApi() {
   searchResults.value = []
@@ -45,16 +55,41 @@ function callApi() {
         </li>
       </ul>
       <div class="flex flex-col md:flex-row items-center">
-        <input v-model="searchText" @input="callApi()">
-        <ul v-if="searchResults">
-          <template v-for="searchResult in searchResults">
-            <li>{{ searchResult.title }}</li>
-          </template>
-        </ul>
+        <div class="relative mt-3 md:mt-0" ref="target">
+          <input @focus="searchIsOpen = true" @keydown="searchIsOpen = true" v-model="searchText" @input="callApi" type="text"
+            class="bg-gray-800 text-sm rounded-full w-64 px-4 pl-8 py-1 focus:outline-none focus:shadow-outline"
+            placeholder="Search">
+          <div class="absolute top-0">
+            <svg class="fill-current w-4 text-gray-500 mt-2 ml-2" viewBox="0 0 24 24">
+              <path class="heroicon-ui"
+                d="M16.32 14.9l5.39 5.4a1 1 0 01-1.42 1.4l-5.38-5.38a8 8 0 111.41-1.41zM10 16a6 6 0 100-12 6 6 0 000 12z" />
+            </svg>
+          </div>
+
+          <!-- <div class="spinner top-0 right-0 mr-4 mt-3"></div> -->
+
+          <div v-show="searchText.length > 2 && searchIsOpen" class="z-50 absolute bg-gray-800 text-sm rounded w-64 mt-4">
+            <ul v-if="searchResults.length">
+              <li v-for="searchResult in searchResults" :key="searchResult.id" class="border-b border-gray-700">
+                <router-link @click="searchIsOpen = false" :to="`/movie/${searchResult.id}`"
+                  class="hover:bg-gray-700 px-3 py-3 flex items-center transition ease-in-out duration-150">
+                  <img v-if="searchResult.poster_path"
+                    :src="`https://image.tmdb.org/t/p/w92/${searchResult.poster_path}`" alt="poster" class="w-8">
+                  <img v-else src="https://via.placeholder.com/50x75" alt="poster" class="w-8">
+                  <span class="ml-4">{{ searchResult.title }}</span>
+                </router-link>
+              </li>
+            </ul>
+            <div v-else class="px-3 py-3">No results for "{{ searchText }}"</div>
+          </div>
+        </div>
       </div>
     </div>
   </nav>
 </template>
 
 <style>
+.spinner {
+  position: absolute;
+}
 </style>
