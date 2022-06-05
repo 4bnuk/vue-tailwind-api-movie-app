@@ -6,6 +6,7 @@ const searchText = ref('')
 const searchResults = ref([])
 const target = ref(null)
 const searchIsOpen = ref(false)
+const debounce = ref(null)
 
 onMounted(() => {
   document.addEventListener('click', (e) => {
@@ -15,20 +16,26 @@ onMounted(() => {
   })
 })
 
-function callApi() {
-  searchResults.value = []
-  if (searchText.value) {
-    //TODO debounce
-    setTimeout(() => {
-      fetch(`https://api.themoviedb.org/3/search/movie?query=${searchText.value}&api_key=${api.key}`)
-        .then(response => response.json())
-        .then(data => {
-          searchResults.value = data.results.slice(0, 5)
-          console.log('searchResults', searchResults.value)
-        });
-    }, 1000);
-  }
+function debounceSearch() {
+  clearTimeout(debounce.value)
+  debounce.value = setTimeout(() => {
+    searchResults.value = []
+    if (searchText.value) {
+      callApi()
+    }
+  }, 1000)
 }
+
+function callApi() {
+  fetch(`https://api.themoviedb.org/3/search/movie?query=${searchText.value}&api_key=${api.key}`)
+    .then(response => response.json())
+    .then(data => {
+      searchResults.value = data.results.slice(0, 5)
+      console.log('searchResults', searchResults.value)
+    });
+
+}
+
 </script>
 
 <template>
@@ -56,7 +63,8 @@ function callApi() {
       </ul>
       <div class="flex flex-col md:flex-row items-center">
         <div class="relative mt-3 md:mt-0" ref="target">
-          <input @focus="searchIsOpen = true" @keydown="searchIsOpen = true" v-model="searchText" @input="callApi" type="text"
+          <input @focus="searchIsOpen = true" @keydown="searchIsOpen = true" v-model="searchText"
+            @input="debounceSearch" type="text"
             class="bg-gray-800 text-sm rounded-full w-64 px-4 pl-8 py-1 focus:outline-none focus:shadow-outline"
             placeholder="Search">
           <div class="absolute top-0">
@@ -68,7 +76,8 @@ function callApi() {
 
           <!-- <div class="spinner top-0 right-0 mr-4 mt-3"></div> -->
 
-          <div v-show="searchText.length > 2 && searchIsOpen" class="z-50 absolute bg-gray-800 text-sm rounded w-64 mt-4">
+          <div v-show="searchText.length > 2 && searchIsOpen"
+            class="z-50 absolute bg-gray-800 text-sm rounded w-64 mt-4">
             <ul v-if="searchResults.length">
               <li v-for="searchResult in searchResults" :key="searchResult.id" class="border-b border-gray-700">
                 <router-link @click="searchIsOpen = false" :to="`/movie/${searchResult.id}`"
