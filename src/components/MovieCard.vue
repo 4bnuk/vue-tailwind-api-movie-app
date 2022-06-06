@@ -15,15 +15,14 @@ const movieGenres = computed(() =>
 
 const formatReleaseDate = computed(() => new Date(props.movie.release_date).toLocaleDateString('el-GR'))
 
-const voteAverage = computed(() => props.movie.vote_average || 'N/A'  )
+const voteAverage = computed(() => props.movie.vote_average || 'N/A')
 
 </script>
 
 <template>
-
-
   <router-link :to="`/movie/${movie.id}`">
-    <img :src="posterPath" :alt="`Poster of the ${movie.title} movie`" class="hover:opacity-75 transition ease-in-out duration-150">
+    <img :src="posterPath" :alt="`Poster of the ${movie.title} movie`"
+      class="hover:opacity-75 transition ease-in-out duration-150">
   </router-link>
   <div class="mt-2">
     <router-link :to="`/movie/${movie.id}`" class="text-lg mt-2 hover:text-gray-300">

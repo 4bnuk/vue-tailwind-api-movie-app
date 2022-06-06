@@ -1,6 +1,5 @@
 <script setup>
-import { onMounted, computed } from 'vue'
-import { ref, watch } from 'vue'
+import { onMounted, computed, ref, watch } from 'vue'
 import api from '../api.js'
 
 const props = defineProps({

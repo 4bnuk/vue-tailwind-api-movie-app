@@ -1,6 +1,5 @@
 <script setup>
-import { ref } from 'vue'
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import api from '../api.js'
 import MovieCard from '../components/MovieCard.vue';
 
