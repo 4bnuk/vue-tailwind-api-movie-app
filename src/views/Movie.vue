@@ -19,6 +19,8 @@ const formatReleaseDate = computed(() => new Date(movie.value.release_date).toLo
 
 const movieGenres = computed(() => movie.value.genres.map(genre => genre.name).join(', '))
 
+const movieTrailerKey = computed(() => movie.value.videos.results.find(video => video.type == 'Trailer')?.key)
+
 function fetchData() {
   fetch(`https://api.themoviedb.org/3/movie/${props.id}?append_to_response=credits,videos,images&api_key=${api.key}`)
     .then(response => response.json())
@@ -39,6 +41,7 @@ watch(() => props.id, () => {
 
 const movie = ref({})
 const renderTemplate = ref(false)
+const showModal = ref(false)
 </script>
 
 <template>
@@ -76,7 +79,8 @@ const renderTemplate = ref(false)
               </div>
             </div>
           </div>
-          <div class="mt-12"> <button @click="isOpen = true"
+          <div v-if="movieTrailerKey" class="mt-12">
+            <button @click="showModal = true"
               class="inline-flex items-center bg-amber-300 text-gray-900 rounded font-semibold px-5 py-4 hover:bg-amber-500 transition ease-in-out duration-150">
               <svg class="w-6 fill-current" viewBox="0 0 24 24">
                 <path d="M0 0h24v24H0z" fill="none" />
@@ -84,7 +88,8 @@ const renderTemplate = ref(false)
                   d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
               </svg>
               <span class="ml-2">Play Trailer</span>
-            </button></div>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -120,6 +125,27 @@ const renderTemplate = ref(false)
         </div>
       </div>
     </div>
+
+    <!-- TODO make modal component -->
+    <div v-if="showModal" style="background-color: rgba(0, 0, 0, .5);"
+      class="fixed top-0 left-0 w-full h-full flex items-center shadow-lg overflow-y-auto">
+      <div class="container mx-auto lg:px-32 rounded-lg overflow-y-auto">
+        <div class="bg-gray-900 rounded">
+          <div class="flex justify-end pr-4 pt-2">
+            <button @click="showModal = false" class="text-3xl leading-none hover:text-gray-300">&times;
+            </button>
+          </div>
+          <div class="modal-body px-8 pt-4 pb-8">
+            <div class="responsive-container overflow-hidden relative" style="padding-top: 56.25%">
+              <iframe class="responsive-iframe absolute top-0 left-0 w-full h-full"
+                :src="`https://www.youtube.com/embed/${movieTrailerKey}`" style="border:0;"
+                allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
