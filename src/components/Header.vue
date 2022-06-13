@@ -44,11 +44,11 @@ function callApi() {
 </script>
 
 <template>
-  <nav class="border-b border-gray-800">
+  <nav class="border-b dark:border-gray-800 border-gray-400">
     <div class="container mx-auto py-3.5 px-5 md:flex">
       <router-link to="/">
         <div class="flex">
-          <span class="text-amber-300 text-3xl mr-5">
+          <span class="dark:text-amber-300 text-red-500 text-3xl mr-5">
             MovieApp
           </span>
         </div>
@@ -63,26 +63,26 @@ function callApi() {
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </span>
-      <ul class="text-xl md:flex md:items-center md:px-0 px-10 md:pb-0 pb-10 md:static absolute bg-gray-900 
+      <ul class="dark:bg-gray-900 bg-slate-200 text-xl md:flex md:items-center md:px-0 px-10 md:pb-0 pb-10 md:static absolute 
         md:w-auto w-full top-14 duration-300 ease-in" :class="[mobileMenuIsOpen ? 'left-0' : 'left-[-100%]']">
         <li class="md:mx-4 md:my-0 my-6">
-          <router-link @click="toggleMenu" class="hover:text-gray-300" to="/">Movies</router-link>
+          <router-link @click="toggleMenu" class="dark:hover:text-gray-300 hover:text-gray-500" to="/">Movies</router-link>
         </li>
         <li class="md:mx-4 md:my-0 my-6">
-          <router-link @click="toggleMenu" class="hover:text-gray-300" to="/about">About</router-link>
+          <router-link @click="toggleMenu" class="dark:hover:text-gray-300 hover:text-gray-500" to="/tvShows">Tv Shows</router-link>
         </li>
         <li class="md:mx-4 md:my-0 my-6">
-          <router-link @click="toggleMenu" class="hover:text-gray-300" to="/people">People</router-link>
+          <router-link @click="toggleMenu" class="dark:hover:text-gray-300 hover:text-gray-500" to="/people">People</router-link>
         </li>
       </ul>
-      <div class="ml-auto md:flex md:items-center md:px-0 px-10 md:pb-0 pb-10 md:static absolute bg-gray-900 
+      <div class="ml-auto md:flex md:items-center md:px-0 px-10 md:pb-0 pb-10 md:static absolute
         md:w-auto w-full top-56 duration-300 ease-in" :class="[mobileMenuIsOpen ? 'left-0' : 'left-[-100%]']">
         <div class="flex flex-col md:flex-row">
           <div class="relative mt-3 md:mt-0" ref="target">
             <input @focus="searchIsOpen = true" @keydown="searchIsOpen = true" v-model="searchText"
               @input="debounceSearch" type="text"
-              class="bg-gray-800 text-sm rounded-full w-full md:w-64 px-4 pl-8 py-1 focus:outline-none focus:shadow-outline"
-              placeholder="Search">
+              class="dark:bg-gray-800 dark:border-0 border bg-slate-200 border-gray-400 text-sm rounded-full w-full md:w-64 px-4 pl-8 py-1 focus:outline-none focus:shadow-outline"
+              placeholder="Search...">
             <div class="absolute top-0">
               <svg class="fill-current w-4 text-gray-500 mt-2 ml-2" viewBox="0 0 24 24">
                 <path class="heroicon-ui"
@@ -93,11 +93,11 @@ function callApi() {
             <!-- <div class="absolute spinner top-0 right-0 mr-4 mt-3"></div> -->
 
             <div v-show="searchText.length > 2 && searchIsOpen"
-              class="z-50 absolute bg-gray-800 text-sm rounded w-full md:w-64 mt-4">
+              class="z-50 absolute dark:bg-gray-800 dark:border-0 border border-gray-400 bg-slate-200 text-sm rounded w-full md:w-64 mt-5">
               <ul v-if="searchResults.length">
-                <li v-for="searchResult in searchResults" :key="searchResult.id" class="border-b border-gray-700">
+                <li v-for="searchResult in searchResults" :key="searchResult.id" class="border-b dark:border-gray-700 border-gray-400">
                   <router-link @click="searchIsOpen = false" :to="`/movie/${searchResult.id}`"
-                    class="hover:bg-gray-700 px-3 py-3 flex items-center transition ease-in-out duration-150">
+                    class="dark:hover:bg-gray-700 hover:bg-gray-500 hover:text-white px-3 py-3 flex items-center transition ease-in-out duration-150">
                     <img v-if="searchResult.poster_path"
                       :src="`https://image.tmdb.org/t/p/w92/${searchResult.poster_path}`" alt="poster" class="w-8">
                     <img v-else src="https://via.placeholder.com/50x75" alt="poster" class="w-8">

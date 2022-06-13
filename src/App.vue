@@ -4,7 +4,7 @@ import Footer from './components/Footer.vue';
 </script>
 
 <template>
-  <div class="bg-gray-900 text-white">
+  <div class="dark:bg-gray-900 bg-slate-200 dark:text-white">
     <Header />
     <router-view />
     <Footer />
