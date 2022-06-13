@@ -1,6 +1,5 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import api from '../api.js'
 
 const props = defineProps({
   id: {
@@ -51,9 +50,9 @@ const credits = computed(() => {
 
 onMounted(() => {
   Promise.all([
-    fetch(`https://api.themoviedb.org/3/person/${props.id}?api_key=${api.key}`),
-    fetch(`https://api.themoviedb.org/3/person/${props.id}/external_ids?api_key=${api.key}`),
-    fetch(`https://api.themoviedb.org/3/person/${props.id}/combined_credits?api_key=${api.key}`)
+    fetch(`https://api.themoviedb.org/3/person/${props.id}?api_key=${import.meta.env.VITE_API_KEY}`),
+    fetch(`https://api.themoviedb.org/3/person/${props.id}/external_ids?api_key=${import.meta.env.VITE_API_KEY}`),
+    fetch(`https://api.themoviedb.org/3/person/${props.id}/combined_credits?api_key=${import.meta.env.VITE_API_KEY}`)
   ]).then(function (responses) {
     return Promise.all(responses.map(function (response) {
       return response.json();

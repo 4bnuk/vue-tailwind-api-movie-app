@@ -1,6 +1,5 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import api from '../api.js'
 
 const searchText = ref('')
 const searchResults = ref([])
@@ -32,7 +31,7 @@ function debounceSearch() {
 }
 
 function callApi() {
-  fetch(`https://api.themoviedb.org/3/search/movie?query=${searchText.value}&api_key=${api.key}`)
+  fetch(`https://api.themoviedb.org/3/search/movie?query=${searchText.value}&api_key=${import.meta.env.VITE_API_KEY}`)
     .then(response => response.json())
     .then(data => {
       searchResults.value = data.results.slice(0, 5)

@@ -1,6 +1,5 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import api from '../api.js'
 
 const profilePath = computed(() => profile_path => {
   if (profile_path) return "https://image.tmdb.org/t/p/w500/" + profile_path
@@ -8,7 +7,7 @@ const profilePath = computed(() => profile_path => {
 })
 
 onMounted(() => {
-  fetch(`https://api.themoviedb.org/3/person/popular?api_key=${api.key}`)
+  fetch(`https://api.themoviedb.org/3/person/popular?api_key=${import.meta.env.VITE_API_KEY}`)
     .then(response => response.json())
     .then(data => {
       people.value = data.results;

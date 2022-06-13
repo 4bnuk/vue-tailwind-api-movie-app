@@ -1,6 +1,5 @@
 <script setup>
 import { onMounted, computed, ref, watch } from 'vue'
-import api from '../api.js'
 
 const props = defineProps({
   id: {
@@ -22,7 +21,7 @@ const movieGenres = computed(() => movie.value.genres.map(genre => genre.name).j
 const movieTrailerKey = computed(() => movie.value.videos.results.find(video => video.type == 'Trailer')?.key)
 
 function fetchData() {
-  fetch(`https://api.themoviedb.org/3/movie/${props.id}?append_to_response=credits,videos,images&api_key=${api.key}`)
+  fetch(`https://api.themoviedb.org/3/movie/${props.id}?append_to_response=credits,videos,images&api_key=${import.meta.env.VITE_API_KEY}`)
     .then(response => response.json())
     .then(data => {
       movie.value = data;

@@ -1,14 +1,13 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import api from '../api.js'
 import MovieCard from '../components/MovieCard.vue';
 
 onMounted(() => {
   Promise.all([
-    fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${api.key}`),
-    fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${api.key}`),
-    fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${api.key}`),
-    fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${api.key}`)
+    fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${import.meta.env.VITE_API_KEY}`),
+    fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${import.meta.env.VITE_API_KEY}`),
+    fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${import.meta.env.VITE_API_KEY}`),
+    fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${import.meta.env.VITE_API_KEY}`)
   ]).then(function (responses) {
     return Promise.all(responses.map(function (response) {
       return response.json();
