@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Movies from '../views/Movies.vue'
 import People from '../views/People.vue'
-import About from '../views/About.vue'
+import TvShows from '../views/TvShows.vue'
 import Movie from '../views/Movie.vue'
 import Person from '../views/Person.vue'
 
@@ -23,9 +23,9 @@ const routes = [
     props: true,
   },
   {
-    path: '/about',
-    name: 'About',
-    component: About,
+    path: '/tvShows',
+    name: 'TvShows',
+    component: TvShows,
   },
   ,
   {

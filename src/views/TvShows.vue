@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <h1>About Page</h1>
+  <h1>Coming Soon...</h1>
 
 </template>
 
