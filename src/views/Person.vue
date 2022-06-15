@@ -19,7 +19,7 @@ const knownForMovies = computed(() => {
       .map(personCredit => {
         let title = personCredit.name || personCredit.title || 'Untitled'
         let posterPath = "https://image.tmdb.org/t/p/w400/" + personCredit.poster_path
-        let linkToPage = personCredit.media_type === 'movie' ? `/movie/${personCredit.id}` : `/movie/${personCredit.id}`
+        let linkToPage = personCredit.media_type === 'movie' ? `/movie/${personCredit.id}` : `/tvShow/${personCredit.id}`
         return {
           title: title,
           posterPath: posterPath,
@@ -34,7 +34,7 @@ const credits = computed(() => {
     return personCredits.value.cast.map(personCredit => {
       let title = personCredit.name || personCredit.title || 'Untitled'
       let releaseDate = personCredit.release_date || personCredit.first_air_date || ''
-      let linkToPage = personCredit.media_type === 'movie' ? `/movie/${personCredit.id}` : `/movie/${personCredit.id}`
+      let linkToPage = personCredit.media_type === 'movie' ? `/movie/${personCredit.id}` : `/tvShow/${personCredit.id}`
       let releaseYear = new Date(releaseDate).getFullYear() || 'Unknown'
       let character = personCredit.character || 'Unknown'
       return {

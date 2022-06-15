@@ -8,25 +8,25 @@ const props = defineProps({
   }
 })
 
-const posterPath = computed(() => "https://image.tmdb.org/t/p/w500/" + movie.value.poster_path)
+const posterPath = computed(() => "https://image.tmdb.org/t/p/w500/" + tvShow.value.poster_path)
 const castProfilePath = computed(() => path => {
   if (path) return "https://image.tmdb.org/t/p/w500/" + path
   else return 'https://via.placeholder.com/300x450'
 })
 
-const formatReleaseDate = computed(() => new Date(movie.value.release_date).toLocaleDateString('el-GR'))
+const formatFirstAirDate = computed(() => new Date(tvShow.value.first_air_date).toLocaleDateString('el-GR'))
 
-const movieGenres = computed(() => movie.value.genres.map(genre => genre.name).join(', '))
+const tvShowGenres = computed(() => tvShow.value.genres.map(genre => genre.name).join(', '))
 
-const movieTrailerKey = computed(() => movie.value.videos.results.find(video => video.type == 'Trailer')?.key)
+const tvShowTrailerKey = computed(() => tvShow.value.videos.results.find(video => video.type == 'Trailer')?.key)
 
 function fetchData() {
-  fetch(`https://api.themoviedb.org/3/movie/${props.id}?append_to_response=credits,videos,images&api_key=${import.meta.env.VITE_API_KEY}`)
+  fetch(`https://api.themoviedb.org/3/tv/${props.id}?append_to_response=credits,videos,images&api_key=${import.meta.env.VITE_API_KEY}`)
     .then(response => response.json())
     .then(data => {
-      movie.value = data;
+      tvShow.value = data;
       renderTemplate.value = true
-      console.log(movie.value)
+      console.log(tvShow.value)
     });
 }
 
@@ -38,20 +38,20 @@ watch(() => props.id, () => {
   fetchData()
 })
 
-const movie = ref({})
+const tvShow = ref({})
 const renderTemplate = ref(false)
 const showModal = ref(false)
 </script>
 
 <template>
   <div v-if="renderTemplate">
-    <div class="movie-info border-b dark:border-gray-800 border-gray-400">
+    <div class="tv-show-info border-b dark:border-gray-800 border-gray-400">
       <div class="container mx-auto px-4 py-16 flex flex-col md:flex-row">
         <div class="flex-none">
-          <img :src="posterPath" :alt="`Poster of the ${movie.title} movie`" class="w-64 lg:w-96">
+          <img :src="posterPath" :alt="`Poster of the ${tvShow.name} TV Show`" class="w-64 lg:w-96">
         </div>
         <div class="md:ml-24">
-          <h2 class="text-4xl mt-4 md:mt-0 font-semibold dark:text-amber-300 text-red-500">{{ movie.title }}</h2>
+          <h2 class="text-4xl mt-4 md:mt-0 font-semibold dark:text-amber-300 text-red-500">{{ tvShow.name }}</h2>
           <div class="flex flex-wrap items-center dark:text-gray-400 text-gray-500 text-sm mt-2">
             <svg class="fill-current dark:text-amber-300 text-red-500 w-4" viewBox="0 0 24 24">
               <g data-name="Layer 2">
@@ -60,25 +60,25 @@ const showModal = ref(false)
                   data-name="star" />
               </g>
             </svg>
-            <span class="ml-1">{{ movie.vote_average }}</span>
+            <span class="ml-1">{{ tvShow.vote_average }}</span>
             <span class="mx-2">|</span>
-            <span>{{ formatReleaseDate }}</span>
+            <span>{{ formatFirstAirDate }}</span>
             <span class="mx-2">|</span>
-            <span>{{ movieGenres }}</span>
+            <span>{{ tvShowGenres }}</span>
           </div>
           <p class="dark:text-gray-300 text-gray-500 mt-8">
-            {{ movie.overview }}
+            {{ tvShow.overview }}
           </p>
           <div class="mt-12">
             <h4 class="dark:text-amber-300 text-red-500 font-semibold">Featured Crew</h4>
             <div class="flex mt-4">
-              <div v-for="crew in movie.credits.crew.slice(0, 4)" :key="crew.id" class="mr-8">
+              <div v-for="crew in tvShow.credits.crew.slice(0, 4)" :key="crew.id" class="mr-8">
                 <div>{{ crew.name }}</div>
                 <div class="text-sm text-gray-400">{{ crew.job }}</div>
               </div>
             </div>
           </div>
-          <div v-if="movieTrailerKey" class="mt-12">
+          <div v-if="tvShowTrailerKey" class="mt-12">
             <button @click="showModal = true" class="inline-flex items-center dark:bg-amber-300 bg-red-500 text-gray-900 rounded font-semibold px-5 py-4 
                 dark:hover:bg-amber-500 hover:bg-red-700 transition ease-in-out duration-150">
               <svg class="w-6 dark:text-black text-white fill-current" viewBox="0 0 24 24">
@@ -92,11 +92,11 @@ const showModal = ref(false)
         </div>
       </div>
     </div>
-    <div class="movie-cast border-b dark:border-gray-800 border-gray-400">
+    <div class="tv-show-cast border-b dark:border-gray-800 border-gray-400">
       <div class="container mx-auto px-4 py-16">
         <h2 class="dark:text-amber-300 text-red-500 text-4xl font-semibold">Cast</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-          <div v-for="cast in movie.credits.cast.slice(0, 10)" :key="cast.id" class="mt-8">
+          <div v-for="cast in tvShow.credits.cast.slice(0, 10)" :key="cast.id" class="mt-8">
             <router-link :to="`/person/${cast.id}`">
               <img :src="castProfilePath(cast.profile_path)" :alt="`Picture of ${cast.name}`"
                 class="hover:opacity-75 transition ease-in-out duration-150">
@@ -113,12 +113,12 @@ const showModal = ref(false)
       </div>
     </div>
 
-    <div class="movie-images">
+    <div class="tv-show-images">
       <div class="container mx-auto px-4 py-16">
         <h2 class="dark:text-amber-300 text-red-500 text-4xl font-semibold">Images</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          <div v-for="image in movie.images.backdrops.slice(0, 9)" class="mt-8">
-            <img :src="`https://image.tmdb.org/t/p/w500/${image.file_path}`" :alt="`Images of ${movie.title} movie`"
+          <div v-for="image in tvShow.images.backdrops.slice(0, 9)" class="mt-8">
+            <img :src="`https://image.tmdb.org/t/p/w500/${image.file_path}`" :alt="`Images of ${tvShow.name} TV Show`"
               class="hover:opacity-75 transition ease-in-out duration-150">
           </div>
         </div>
@@ -131,13 +131,14 @@ const showModal = ref(false)
       <div class="container mx-auto lg:px-32 rounded-lg overflow-y-auto">
         <div class="dark:bg-gray-900 bg-slate-200 rounded">
           <div class="flex justify-end pr-4 pt-2">
-            <button @click="showModal = false" class="text-3xl leading-none dark:hover:text-gray-300 hover:text-gray-500">&times;
+            <button @click="showModal = false"
+              class="text-3xl leading-none dark:hover:text-gray-300 hover:text-gray-500">&times;
             </button>
           </div>
           <div class="modal-body px-8 pt-4 pb-8">
             <div class="responsive-container overflow-hidden relative" style="padding-top: 56.25%">
               <iframe class="responsive-iframe absolute top-0 left-0 w-full h-full"
-                :src="`https://www.youtube.com/embed/${movieTrailerKey}`" style="border:0;"
+                :src="`https://www.youtube.com/embed/${tvShowTrailerKey}`" style="border:0;"
                 allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
           </div>
