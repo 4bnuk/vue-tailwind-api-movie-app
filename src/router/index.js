@@ -5,6 +5,7 @@ import TvShows from '../views/TvShows.vue'
 import TvShow from '../views/TvShow.vue'
 import Movie from '../views/Movie.vue'
 import Person from '../views/Person.vue'
+import PageNotFound from '../views/PageNotFound.vue'
 
 const routes = [
   {
@@ -40,6 +41,11 @@ const routes = [
     name: 'TvShow',
     component: TvShow,
     props: true,
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'PageNotFound',
+    component: PageNotFound,
   },
 ]
 
