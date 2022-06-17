@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <div class="w-2/5 h-2/5 mx-auto text-center mb-5">
+  <div class="md:w-2/5 md:h-2/5 mx-auto text-center mb-5">
     <svg class="animated" id="freepik_stories-404-error" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"
       version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs">
 
@@ -390,8 +390,8 @@
       <button class="inline-flex items-center space-x-4 dark:bg-amber-300 bg-red-500 text-gray-900 rounded font-semibold px-5 py-4 
       dark:hover:bg-amber-500 hover:bg-red-700 transition ease-in-out duration-150">
         <span class="ml-2 dark:text-black text-white">HOME</span>
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 dark:text-black text-white fill-current" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-          stroke-width="2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 dark:text-black text-white fill-current" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
         </svg>
       </button>
