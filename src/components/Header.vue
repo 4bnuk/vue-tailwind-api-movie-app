@@ -19,6 +19,7 @@ onMounted(() => {
 })
 
 function toggleMenu() {
+  if (searchIsOpen.value) searchIsOpen.value = false
   if (window.matchMedia("(max-width: 768px)").matches) mobileMenuIsOpen.value = !mobileMenuIsOpen.value
 }
 
@@ -38,7 +39,7 @@ function callApi() {
   fetch(`https://api.themoviedb.org/3/search/movie?query=${searchText.value}&api_key=${import.meta.env.VITE_API_KEY}`)
     .then(response => response.json())
     .then(data => {
-      if(!data.results.length) noResults.value = true
+      if (!data.results.length) noResults.value = true
       searchResults.value = data.results.slice(0, 5)
       toggleSpinner.value = false
       console.log('searchResults', searchResults.value)
@@ -98,7 +99,8 @@ function callApi() {
               </svg>
             </div>
 
-            <svg v-show="toggleSpinner" role="status" class="absolute top-1 right-2 w-5 h-5 text-gray-400 fill-red-500 animate-spin dark:text-gray-600 dark:fill-amber-300"
+            <svg v-show="toggleSpinner" role="status"
+              class="absolute top-1 right-2 w-5 h-5 text-gray-400 fill-red-500 animate-spin dark:text-gray-600 dark:fill-amber-300"
               viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
@@ -113,7 +115,7 @@ function callApi() {
               <ul v-show="searchResults.length">
                 <li v-for="searchResult in searchResults" :key="searchResult.id"
                   class="border-b dark:border-gray-700 border-gray-400">
-                  <router-link @click="searchIsOpen = false" :to="`/movie/${searchResult.id}`"
+                  <router-link @click="toggleMenu" :to="`/movie/${searchResult.id}`"
                     class="dark:hover:bg-gray-700 hover:bg-gray-500 hover:text-white px-3 py-3 flex items-center transition ease-in-out duration-150">
                     <img v-if="searchResult.poster_path"
                       :src="`https://image.tmdb.org/t/p/w92/${searchResult.poster_path}`" alt="poster" class="w-8">
