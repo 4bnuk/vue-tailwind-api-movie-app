@@ -1,45 +1,45 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Movies from '../views/Movies.vue'
-import People from '../views/People.vue'
-import TvShows from '../views/TvShows.vue'
-import TvShow from '../views/TvShow.vue'
-import Movie from '../views/Movie.vue'
-import Person from '../views/Person.vue'
+import MoviesIndex from '../views/MoviesIndex.vue'
+import PeopleIndex from '../views/PeopleIndex.vue'
+import TvShowsIndex from '../views/TvShowsIndex.vue'
+import TvShowDetail from '../views/TvShowDetail.vue'
+import MovieDetail from '../views/MovieDetail.vue'
+import PersonDetail from '../views/PersonDetail.vue'
 import PageNotFound from '../views/PageNotFound.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'Movies',
-    component: Movies,
+    name: 'MoviesIndex',
+    component: MoviesIndex,
   },
   {
     path: '/people',
-    name: 'People',
-    component: People,
+    name: 'PeopleIndex',
+    component: PeopleIndex,
   },
   {
     path: '/person/:id',
-    name: 'Person',
-    component: Person,
+    name: 'PersonDetail',
+    component: PersonDetail,
     props: true,
   },
   {
     path: '/tvShows',
-    name: 'TvShows',
-    component: TvShows,
+    name: 'TvShowsIndex',
+    component: TvShowsIndex,
   },
   ,
   {
     path: '/movie/:id',
-    name: 'Movie',
-    component: Movie,
+    name: 'MovieDetail',
+    component: MovieDetail,
     props: true,
   },
   {
     path: '/tvShow/:id',
-    name: 'TvShow',
-    component: TvShow,
+    name: 'TvShowDetail',
+    component: TvShowDetail,
     props: true,
   },
   {
