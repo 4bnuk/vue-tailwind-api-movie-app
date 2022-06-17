@@ -131,7 +131,8 @@ const showModal = ref(false)
       <div class="container mx-auto lg:px-32 rounded-lg overflow-y-auto">
         <div class="dark:bg-gray-900 bg-slate-200 rounded">
           <div class="flex justify-end pr-4 pt-2">
-            <button @click="showModal = false" class="text-3xl leading-none dark:hover:text-gray-300 hover:text-gray-500">&times;
+            <button @click="showModal = false"
+              class="text-3xl leading-none dark:hover:text-gray-300 hover:text-gray-500">&times;
             </button>
           </div>
           <div class="modal-body px-8 pt-4 pb-8">
