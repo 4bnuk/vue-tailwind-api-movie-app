@@ -72,7 +72,7 @@ const showModal = ref(false)
           <p class="dark:text-gray-300 text-gray-500 mt-8">
             {{ movie.overview }}
           </p>
-          <div class="mt-12">
+          <div v-if="movie.credits.crew.length" class="mt-12">
             <h4 class="dark:text-amber-300 text-red-500 font-semibold">Featured Crew</h4>
             <div class="flex mt-4">
               <div v-for="crew in movie.credits.crew.slice(0, 4)" :key="crew.id" class="mr-8">
