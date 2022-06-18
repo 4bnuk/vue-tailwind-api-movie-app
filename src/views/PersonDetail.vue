@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
+import Spinner from '../components/Spinner.vue'
 
 const props = defineProps({
   id: {
@@ -53,19 +54,17 @@ onMounted(() => {
     fetch(`https://api.themoviedb.org/3/person/${props.id}?api_key=${import.meta.env.VITE_API_KEY}`),
     fetch(`https://api.themoviedb.org/3/person/${props.id}/external_ids?api_key=${import.meta.env.VITE_API_KEY}`),
     fetch(`https://api.themoviedb.org/3/person/${props.id}/combined_credits?api_key=${import.meta.env.VITE_API_KEY}`)
-  ]).then(function (responses) {
-    return Promise.all(responses.map(function (response) {
-      return response.json();
-    }));
-  }).then(function (data) {
-    person.value = data[0]
-    personSocial.value = data[1]
-    personCredits.value = data[2]
-    renderTemplate.value = true
-    console.log(data);
-  }).catch(function (error) {
-    console.log(error)
-  });
+  ]).then(responses => Promise.all(responses.map(response => response.json()))
+  ).then(data => {
+    if (data.success !== false) {
+      person.value = data[0]
+      personSocial.value = data[1]
+      personCredits.value = data[2]
+      renderTemplate.value = true
+      console.log(data)
+    }
+
+  }).catch(error => console.log(error))
 })
 
 const person = ref({})
@@ -173,6 +172,9 @@ const renderTemplate = ref(false)
         </ul>
       </div>
     </div>
+  </div>
+  <div v-else class="h-screen flex justify-center items-center">
+    <Spinner />
   </div>
 </template>
 

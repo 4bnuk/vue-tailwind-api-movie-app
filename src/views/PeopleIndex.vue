@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import Spinner from '../components/Spinner.vue'
 
 const profilePath = computed(() => profile_path => {
   if (profile_path) return "https://image.tmdb.org/t/p/w500/" + profile_path
@@ -10,17 +11,22 @@ onMounted(() => {
   fetch(`https://api.themoviedb.org/3/person/popular?api_key=${import.meta.env.VITE_API_KEY}`)
     .then(response => response.json())
     .then(data => {
-      people.value = data.results;
-      console.log(people.value)
-    });
+      if (data.success !== false) {
+        people.value = data.results
+        console.log(people.value)
+        renderTemplate.value = true
+      }
+
+    }).catch(error => console.log(error))
 })
 
 const people = ref([])
+const renderTemplate = ref(false)
 
 </script>
 
 <template>
-  <div class="container mx-auto px-4 pt-16">
+  <div v-if="renderTemplate" class="container mx-auto px-4 pt-16">
     <div class="popular-movies pb-16">
       <h2 class="uppercase tracking-wider dark:text-amber-300 text-red-500 text-xl font-bold">Popular People</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
@@ -40,6 +46,9 @@ const people = ref([])
         </div>
       </div>
     </div>
+  </div>
+  <div v-else class="h-screen flex justify-center items-center">
+    <Spinner />
   </div>
 </template>
 

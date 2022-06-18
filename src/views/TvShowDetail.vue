@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, computed, ref, watch } from 'vue'
+import Spinner from '../components/Spinner.vue'
 
 const props = defineProps({
   id: {
@@ -24,10 +25,12 @@ function fetchData() {
   fetch(`https://api.themoviedb.org/3/tv/${props.id}?append_to_response=credits,videos,images&api_key=${import.meta.env.VITE_API_KEY}`)
     .then(response => response.json())
     .then(data => {
-      tvShow.value = data;
-      renderTemplate.value = true
-      console.log(tvShow.value)
-    });
+      if (data.success !== false) {
+        tvShow.value = data
+        renderTemplate.value = true
+        console.log(tvShow.value)
+      }
+    }).catch(error => console.log(error))
 }
 
 onMounted(() => {
@@ -144,7 +147,9 @@ const showModal = ref(false)
         </div>
       </div>
     </div>
-
+  </div>
+  <div v-else class="h-screen flex justify-center items-center">
+    <Spinner />
   </div>
 </template>
 
