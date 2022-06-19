@@ -10,15 +10,14 @@ function toggleMode() {
 </script>
 
 <template>
-  <footer class="border-t dark:border-gray-800 border-gray-400 py-3">
+  <footer class="border-t dark:border-gray-800 border-gray-400 py-4">
     <div class="flex flex-col-reverse md:flex-row justify-between container place-items-center mx-auto p-4">
       <div>
         <p>Created by Me</p>
         <p>This product uses the<a href="https://www.themoviedb.org/documentation/api"> TMDB API</a> but is not endorsed
-          or
-          certified by TMDB</p>
+          or certified by TMDB</p>
       </div>
-      <div>
+      <div class="mb-8 md:mb-0">
         <label class="switch">
           <input type="checkbox" v-model="darkMode">
           <span @click="toggleMode" class="slider round"></span>
