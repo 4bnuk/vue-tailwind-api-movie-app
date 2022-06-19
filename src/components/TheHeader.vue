@@ -51,7 +51,7 @@ function callApi() {
 
 <template>
   <nav class="border-b dark:border-gray-800 border-gray-400">
-    <div class="container mx-auto py-3.5 px-5 md:flex">
+    <div class="container mx-auto py-5 px-5 md:flex">
       <router-link to="/">
         <div class="flex">
           <span class="dark:text-amber-300 text-red-500 text-3xl mr-5">
@@ -69,8 +69,8 @@ function callApi() {
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </span>
-      <ul class="dark:bg-gray-900 bg-slate-200 text-xl md:flex md:items-center md:px-0 px-10 md:pb-0 pb-10 md:static absolute 
-        md:w-auto w-full top-14 duration-300 ease-in" :class="[mobileMenuIsOpen ? 'left-0' : 'left-[-100%]']">
+      <ul class="dark:bg-gray-900 bg-slate-200 text-xl md:flex md:items-center md:px-0 px-10 md:pb-0 pb-14 md:static absolute 
+        md:w-auto w-full top-20 duration-300 ease-in" :class="[mobileMenuIsOpen ? 'left-0' : 'left-[-100%]']">
         <li class="md:mx-4 md:my-0 my-6">
           <router-link @click="toggleMenu" class="dark:hover:text-gray-300 hover:text-gray-500" to="/">Movies
           </router-link>
@@ -85,12 +85,12 @@ function callApi() {
         </li>
       </ul>
       <div class="ml-auto md:flex md:items-center md:px-0 px-10 md:pb-0 pb-10 md:static absolute
-        md:w-auto w-full top-56 duration-300 ease-in" :class="[mobileMenuIsOpen ? 'left-0' : 'left-[-100%]']">
+        md:w-auto w-full top-64 duration-300 ease-in" :class="[mobileMenuIsOpen ? 'left-0' : 'left-[-100%]']">
         <div class="flex flex-col md:flex-row">
           <div class="relative mt-3 md:mt-0" ref="target">
             <input @focus="searchIsOpen = true" @keydown="searchIsOpen = true" v-model="searchText"
               @input="debounceSearch" type="text"
-              class="dark:bg-gray-800 dark:border-0 border bg-slate-200 border-gray-400 text-sm rounded-full w-full md:w-64 px-4 pl-8 py-1 focus:outline-none focus:shadow-outline"
+              class="dark:bg-gray-800 dark:border-0 border bg-slate-200 border-gray-400 text-sm rounded-full w-full md:w-64 px-4 pl-8 py-1 focus:outline-none focus:ring-1 focus:ring-gray-500"
               placeholder="Search a movie...">
             <div class="absolute top-0">
               <svg class="fill-current w-4 text-gray-500 mt-2 ml-2" viewBox="0 0 24 24">
