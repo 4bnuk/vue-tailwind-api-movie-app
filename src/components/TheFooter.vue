@@ -4,7 +4,6 @@ import { ref } from 'vue'
 const darkMode = ref(true)
 
 function toggleMode() {
-  darkMode.value = !darkMode.value
   document.getElementsByTagName('body')[0].classList.toggle('dark')
 }
 
@@ -19,21 +18,80 @@ function toggleMode() {
           or
           certified by TMDB</p>
       </div>
-      <div class="flex space-x-4 justify-center mb-10 md:mb-0">
-        <span v-if="darkMode">Light Mode:</span>
-        <span v-else>Dark Mode:</span>
-        <svg v-if="darkMode" @click="toggleMode" class="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24"
-          stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-        </svg>
-        <svg v-else @click="toggleMode" class="h-6 w-6 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
-          <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-        </svg>
+      <div>
+        <label class="switch">
+          <input type="checkbox" v-model="darkMode">
+          <span @click="toggleMode" class="slider round"></span>
+        </label>
       </div>
     </div>
   </footer>
 </template>
 
-<style>
+<style scoped>
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 80px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fcd34d;
+}
+
+.slider:before {
+  z-index: 1;
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: #fcd34d;
+}
+
+.slider:after {
+  position: absolute;
+  z-index: 1;
+  content: url("../assets/sun.svg");
+  left: 6px;
+  top: 6px;
+}
+
+input:checked+.slider {
+  background-color: #a1a1aa;
+}
+
+input:checked+.slider:before {
+  background: #a1a1aa;
+}
+
+input:checked+.slider:after {
+  position: absolute;
+  z-index: 1;
+  content: url("../assets/moon.svg");
+  left: 50px;
+  top: 1px;
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
 </style>
