@@ -18,6 +18,11 @@ onMounted(() => {
   })
 })
 
+function clearSearchText() {
+  searchText.value = ''
+  searchResults.value = []
+}
+
 function toggleMenu() {
   if (searchIsOpen.value) searchIsOpen.value = false
   if (window.matchMedia("(max-width: 768px)").matches) mobileMenuIsOpen.value = !mobileMenuIsOpen.value
@@ -52,7 +57,7 @@ function callApi() {
 <template>
   <nav class="border-b dark:border-gray-800 border-gray-400">
     <div class="container mx-auto py-5 px-5 md:flex">
-      <router-link to="/">
+      <router-link @click="toggleMenu" to="/">
         <div class="flex">
           <span class="dark:text-amber-300 text-red-500 text-3xl mr-5">
             MovieApp
@@ -99,7 +104,7 @@ function callApi() {
               </svg>
             </div>
 
-            <svg v-show="toggleSpinner" role="status"
+            <svg v-show="toggleSpinner"
               class="absolute top-1 right-2 w-5 h-5 text-gray-400 fill-red-500 animate-spin dark:text-gray-600 dark:fill-amber-300"
               viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -110,7 +115,13 @@ function callApi() {
                 fill="currentFill" />
             </svg>
 
-            <div v-show="searchText.length > 2 && searchIsOpen"
+            <svg v-show="searchText.length && !toggleSpinner" @click="clearSearchText"
+              class="absolute top-1 right-2 w-5 h-5 text-red-500 dark:text-amber-300 cursor-pointer"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+
+            <div v-show="searchText.length && searchIsOpen"
               class="z-50 absolute dark:bg-gray-800 dark:border-0 border border-gray-400 bg-slate-200 text-sm rounded w-full md:w-64 mt-5">
               <ul v-show="searchResults.length">
                 <li v-for="searchResult in searchResults" :key="searchResult.id"
