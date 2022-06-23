@@ -57,7 +57,7 @@ function callApi() {
 <template>
   <nav class="border-b dark:border-gray-800 border-gray-400">
     <div class="container mx-auto py-5 px-5 md:flex">
-      <router-link @click="toggleMenu" to="/">
+      <router-link @click="mobileMenuIsOpen = false" to="/">
         <div class="flex">
           <span class="dark:text-amber-300 text-red-500 text-3xl mr-5">
             MovieApp

@@ -6,7 +6,10 @@ const props = defineProps({
   genres: Object
 })
 
-const posterPath = computed(() => "https://image.tmdb.org/t/p/w500/" + props.movie.poster_path)
+const posterPath = computed(() => {
+  if (props.movie.poster_path) return "https://image.tmdb.org/t/p/w500/" + props.movie.poster_path
+  else return 'https://via.placeholder.com/300x450'
+  })
 
 const movieGenres = computed(() =>
   props.genres.filter(genre =>
