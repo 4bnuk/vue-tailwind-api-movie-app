@@ -57,12 +57,8 @@ function callApi() {
 <template>
   <nav class="border-b dark:border-gray-800 border-gray-400">
     <div class="container mx-auto py-5 px-5 md:flex">
-      <router-link @click="mobileMenuIsOpen = false" to="/">
-        <div class="flex">
-          <span class="dark:text-amber-300 text-red-500 text-3xl mr-5">
-            MovieApp
-          </span>
-        </div>
+      <router-link @click="mobileMenuIsOpen = false" to="/" class="dark:text-amber-300 text-red-500 text-3xl mr-5 logo">
+        MovieApp
       </router-link>
 
       <span @click="toggleMenu" class="absolute md:hidden right-6 top-4 cursor-pointer">
@@ -116,8 +112,8 @@ function callApi() {
             </svg>
 
             <svg v-show="searchText.length && !toggleSpinner" @click="clearSearchText"
-              class="absolute top-1 right-2 w-5 h-5 text-red-500 dark:text-amber-300 cursor-pointer"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              class="absolute top-1 right-2 w-5 h-5 text-red-500 dark:text-amber-300 cursor-pointer" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
 
@@ -145,4 +141,11 @@ function callApi() {
 </template>
 
 <style scoped>
+.dark .router-link-active:not(.logo){
+  color: #d1d5db;
+}
+
+.router-link-active:not(.logo) {
+  color: #6b7280;
+}
 </style>
