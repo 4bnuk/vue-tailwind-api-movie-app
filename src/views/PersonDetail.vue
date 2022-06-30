@@ -77,8 +77,8 @@ const renderTemplate = ref(false)
 <template>
   <div v-if="renderTemplate">
     <div class="person-info border-b border-gray-800">
-      <div class="container mx-auto px-4 py-16 flex flex-col md:flex-row">
-        <div class="flex-none">
+      <div class="container mx-auto px-4 py-16 flex flex-col lg:flex-row">
+        <div class="flex-none mx-auto">
           <img :src="profilePath" :alt="`Picture of ${person.name}`" class="w-74">
           <ul class="flex items-center mt-4">
             <li v-if="personSocial.facebook_id">
@@ -119,8 +119,8 @@ const renderTemplate = ref(false)
             </li>
           </ul>
         </div>
-        <div class="md:ml-24">
-          <h2 class="dark:text-amber-300 text-red-500 text-4xl mt-4 md:mt-0 font-semibold">{{ person.name }}</h2>
+        <div class="lg:ml-24">
+          <h2 class="dark:text-amber-300 text-center lg:text-left text-red-500 text-4xl mt-4 lg:mt-0 font-semibold">{{ person.name }}</h2>
           <div class="flex flex-wrap items-center dark:text-gray-400 text-gray-500 text-sm mt-3">
             <svg class="fill-current text-gray-400 hover:text-white w-4" viewBox="0 0 448 512">
               <path

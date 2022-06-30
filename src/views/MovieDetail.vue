@@ -49,12 +49,12 @@ const showModal = ref(false)
 <template>
   <div v-if="renderTemplate">
     <div class="movie-info border-b dark:border-gray-800 border-gray-400">
-      <div class="container mx-auto px-4 py-16 flex flex-col md:flex-row">
+      <div class="container mx-auto px-4 py-16 flex flex-col lg:flex-row">
         <div class="flex justify-center md:flex-none">
           <img :src="posterPath" :alt="`Poster of the ${movie.title} movie`" class="w-96">
         </div>
-        <div class="md:ml-24">
-          <h2 class="text-4xl mt-4 md:mt-0 font-semibold dark:text-amber-300 text-red-500">{{ movie.title }}</h2>
+        <div class="lg:ml-24">
+          <h2 class="text-4xl mt-4 lg:mt-0 text-center lg:text-left font-semibold dark:text-amber-300 text-red-500">{{ movie.title }}</h2>
           <div class="flex flex-wrap items-center dark:text-gray-400 text-gray-500 text-sm mt-2">
             <svg class="fill-current dark:text-amber-300 text-red-500 w-4" viewBox="0 0 24 24">
               <g data-name="Layer 2">
